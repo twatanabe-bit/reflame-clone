@@ -67,15 +67,27 @@ export default function HomePage() {
         </div>
 
         {/* CTA */}
-        <div className="animate-fade-up [animation-delay:520ms]">
-          <Link
-            href="/diagnosis"
-            className="inline-flex items-center gap-[10px] rounded-full bg-gradient-to-br from-blue-600 to-blue-800 px-12 py-5 text-[17px] font-bold text-white shadow-lg transition-all hover:-translate-y-[3px] hover:shadow-[0_16px_48px_rgba(30,64,175,0.45)]"
-          >
-            無料で診断する
-            <ArrowRight className="h-5 w-5" />
-          </Link>
-          <p className="mt-[10px] text-xs text-slate-500">※ 無料・登録不要 ─ 所要時間2分</p>
+        <div className="animate-fade-up [animation-delay:520ms] flex flex-col gap-4 sm:flex-row sm:items-center">
+          <div>
+            <Link
+              href="/diagnosis"
+              className="inline-flex items-center gap-[10px] rounded-full bg-gradient-to-br from-blue-600 to-blue-800 px-12 py-5 text-[17px] font-bold text-white shadow-lg transition-all hover:-translate-y-[3px] hover:shadow-[0_16px_48px_rgba(30,64,175,0.45)]"
+            >
+              無料で診断する
+              <ArrowRight className="h-5 w-5" />
+            </Link>
+            <p className="mt-[10px] text-xs text-slate-500">※ 無料・登録不要 ─ 所要時間2分</p>
+          </div>
+          <div>
+            <Link
+              href="/interview"
+              className="inline-flex items-center gap-[10px] rounded-full bg-gradient-to-br from-purple-600 to-blue-600 px-10 py-5 text-[17px] font-bold text-white shadow-lg transition-all hover:-translate-y-[3px] hover:shadow-[0_16px_48px_rgba(124,58,237,0.45)]"
+            >
+              🎭 AI面接官と練習
+              <ArrowRight className="h-5 w-5" />
+            </Link>
+            <p className="mt-[10px] text-xs text-slate-500">※ 芸能人風アバターが面接官に</p>
+          </div>
         </div>
 
         {/* Preview box */}
