@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect, useMemo, useCallback } from "react";
+import { useState, useRef, useEffect, useMemo, useCallback, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import {
@@ -187,6 +187,14 @@ function generateScores(): InterviewScores {
 
 // ===== Main Component =====
 export default function InterviewSessionPage() {
+  return (
+    <Suspense fallback={<div className="flex h-screen items-center justify-center bg-gradient-to-br from-[#0A1628] to-[#1E40AF] text-white">読み込み中...</div>}>
+      <InterviewSessionContent />
+    </Suspense>
+  );
+}
+
+function InterviewSessionContent() {
   const searchParams = useSearchParams();
   const personaId = searchParams.get("persona");
 

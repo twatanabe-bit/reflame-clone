@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import {
@@ -182,6 +182,14 @@ function RankProgressBar({
 }
 
 export default function InterviewResultPage() {
+  return (
+    <Suspense fallback={<div className="flex h-screen items-center justify-center bg-gradient-to-br from-[#0A1628] to-[#1E40AF] text-white">読み込み中...</div>}>
+      <InterviewResultContent />
+    </Suspense>
+  );
+}
+
+function InterviewResultContent() {
   const searchParams = useSearchParams();
   const personaId = searchParams.get("persona");
 

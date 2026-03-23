@@ -1,16 +1,10 @@
 import type { Metadata } from "next";
-import { Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
 
-const notoSansJP = Noto_Sans_JP({
-  variable: "--font-noto-sans-jp",
-  subsets: ["latin"],
-  weight: ["400", "500", "700", "900"],
-});
-
 export const metadata: Metadata = {
-  title: "市場価値診断 2025 | Market Value Diagnostic",
-  description: "業界別マトリックスに基づく構造化スコアリングで、あなたのリアルな市場価値を診断します。",
+  title: "Star Interview Avatar | 芸能人AI面接官",
+  description:
+    "芸能人の価値観・話し方を再現したAIアバターが、27卒就活生の面接力を鍛え上げる。",
 };
 
 export default function RootLayout({
@@ -19,8 +13,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja" className={`${notoSansJP.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col font-[family-name:var(--font-noto-sans-jp)]">
+    <html lang="ja" className="h-full antialiased">
+      <head>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className="min-h-full flex flex-col" style={{ fontFamily: "'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Meiryo', sans-serif" }}>
         {children}
       </body>
     </html>
