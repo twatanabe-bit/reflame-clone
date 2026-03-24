@@ -21,10 +21,17 @@ jobs:
           cache: "npm"
       - run: npm ci
       - run: npx next build
-        env:
-          NEXT_PUBLIC_BASE_PATH: ""
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./out
+      - name: Enable GitHub Pages
+        run: |
+          # Enable Pages from gh-pages branch if not already enabled
+          curl -s -X POST \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/${{ github.repository }}/pages" \
+            -d '{"build_type":"legacy","source":{"branch":"gh-pages","path":"/"}}' || true
