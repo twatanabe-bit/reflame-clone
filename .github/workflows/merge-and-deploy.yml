@@ -1,0 +1,33 @@
+name: Merge to Main and Deploy
+
+on:
+  push:
+    branches: ["claude/celebrity-interview-avatar-9IF4q"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  merge-and-trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Merge feature branch to main
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout main
+          git merge origin/claude/celebrity-interview-avatar-9IF4q --no-edit -m "Merge interview-avatar feature for deployment" || echo "Already up to date"
+          git push origin main || echo "Nothing to push"
+      - name: Trigger deploy workflow
+        run: |
+          curl -s -X POST \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${{ github.repository }}/dispatches" \
+            -d '{"event_type":"deploy-pages"}'
+          echo "Deploy triggered"
