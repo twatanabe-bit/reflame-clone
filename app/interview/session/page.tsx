@@ -17,6 +17,8 @@ import {
   calculateRank,
   calculateExp,
 } from "@/lib/interview/data";
+import { generateSmartResponse } from "@/lib/interview/response";
+import { calculateSessionScores, encodeScores } from "@/lib/interview/scoring";
 import type {
   DialogTurn,
   AvatarEmotion,
@@ -119,71 +121,7 @@ function PhaseProgress({
   );
 }
 
-// ===== Simulated AI Response =====
-function generateAvatarResponse(
-  persona: CelebrityPersona,
-  phase: InterviewPhase,
-  userMessage: string,
-  turnInPhase: number
-): { text: string; emotion: AvatarEmotion } {
-  const { values } = persona;
-  const ending =
-    values.speechRhythm.sentenceEnding[
-      Math.floor(Math.random() * values.speechRhythm.sentenceEnding.length)
-    ] || "";
-  const filler =
-    values.speechRhythm.fillerWords[
-      Math.floor(Math.random() * values.speechRhythm.fillerWords.length)
-    ] || "";
-
-  // Phase-based follow-up responses
-  const responses: Record<InterviewPhase, { text: string; emotion: AvatarEmotion }[]> = {
-    intro: [
-      { text: `${filler}、なるほどね。もう少し具体的に、何が一番の強みか教えて${ending}。`, emotion: "thinking" },
-      { text: `いいね。じゃあ次のフェーズに行こう${ending}。`, emotion: "smile" },
-    ],
-    gakuchika: [
-      { text: `ふーん、それで？その経験から何を学んだ${ending}？具体的なエピソードが欲しいな。`, emotion: "serious" },
-      { text: `なかなか面白い経験してるね。もっとパンチ力のある言い方があると思うけど${ending}。`, emotion: "impressed" },
-      { text: `OK、伝わった。次いこう${ending}。`, emotion: "smile" },
-    ],
-    motivation: [
-      { text: `${filler}、その志望理由は他の会社にも当てはまらない？もっと具体的に${ending}。`, emotion: "confused" },
-      { text: `いい回答だね。${values.catchphrases[Math.floor(Math.random() * values.catchphrases.length)]}`, emotion: "impressed" },
-    ],
-    strength: [
-      { text: `弱みを認められるのは良いことだ${ending}。で、どうやって克服してる？`, emotion: "thinking" },
-      { text: `${filler}、なるほど。次で最後の質問に行こう${ending}。`, emotion: "smile" },
-    ],
-    future: [
-      { text: `面白いビジョンだね${ending}。でも、そのためにいま何してる？`, emotion: "serious" },
-      { text: `${values.catchphrases[0]} 将来が楽しみだね${ending}。`, emotion: "encouraging" },
-    ],
-    reverse: [
-      { text: `いい質問だね${ending}。${filler}、そうだな…自分を信じて突き進む力が一番大事だと思うよ。`, emotion: "smile" },
-      { text: `なるほど${ending}。他に聞きたいことはある？なければフィードバックに行くよ。`, emotion: "encouraging" },
-    ],
-    feedback: [
-      { text: "お疲れさま！フィードバックを確認してね。", emotion: "smile" },
-    ],
-  };
-
-  const phaseResponses = responses[phase] || responses.intro;
-  const idx = Math.min(turnInPhase, phaseResponses.length - 1);
-  return phaseResponses[idx];
-}
-
-// ===== Score Generation =====
-function generateScores(): InterviewScores {
-  const r = () => Math.floor(Math.random() * 30) + 55; // 55-85 range
-  return {
-    logic: r(),
-    passion: r(),
-    originality: r(),
-    conciseness: r(),
-    impression: r(),
-  };
-}
+// Response generation and scoring are now imported from lib/interview/response.ts and scoring.ts
 
 // ===== Main Component =====
 export default function InterviewSessionPage() {
@@ -261,7 +199,7 @@ function InterviewSessionContent() {
 
     const delay = 800 + Math.random() * 1200;
     setTimeout(() => {
-      const response = generateAvatarResponse(persona, currentPhase, text, turnInPhase);
+      const response = generateSmartResponse(persona, currentPhase, text, turnInPhase);
       setDialog((prev) => [
         ...prev,
         { speaker: "avatar", text: response.text, emotion: response.emotion },
@@ -300,18 +238,25 @@ function InterviewSessionContent() {
         setTimeout(() => {
           setIsFinished(true);
           setCurrentPhase("feedback");
-          const scores = generateScores();
-          const exp = calculateExp(scores);
-          const rank = calculateRank(exp);
 
-          setDialog((prev) => [
-            ...prev,
-            {
-              speaker: "avatar",
-              text: `お疲れさま！全フェーズ完了だよ。\n\n${persona.encouragement}\n\n📊 結果を見てみよう。`,
-              emotion: "encouraging",
-            },
-          ]);
+          setDialog((prev) => {
+            // Calculate scores from all user messages in this session
+            const allTurns = [...prev, { speaker: "user" as const, text }];
+            const scores = calculateSessionScores(allTurns);
+            // Store scores in sessionStorage for the result page
+            try {
+              sessionStorage.setItem("interview-scores", JSON.stringify(scores));
+            } catch {}
+
+            return [
+              ...prev,
+              {
+                speaker: "avatar" as const,
+                text: `お疲れさま！全フェーズ完了だよ。\n\n${persona.encouragement}\n\n📊 結果を見てみよう。`,
+                emotion: "encouraging" as AvatarEmotion,
+              },
+            ];
+          });
           setAvatarEmotion("encouraging");
         }, 800);
       }
@@ -395,7 +340,7 @@ function InterviewSessionContent() {
           {isFinished ? (
             <div className="flex items-center justify-center gap-4">
               <Link
-                href={`/interview/result?persona=${persona.id}`}
+                href={`/interview/result?persona=${persona.id}&from=session`}
                 className="inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-purple-600 to-blue-600 px-8 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:shadow-lg"
               >
                 📊 結果を見る

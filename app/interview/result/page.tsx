@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, Suspense } from "react";
+import { useMemo, useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import {
@@ -13,6 +13,7 @@ import {
   MessageCircle,
 } from "lucide-react";
 import { CELEBRITY_PERSONAS, calculateRank, RANK_DEFINITIONS } from "@/lib/interview/data";
+import { loadProgress, saveProgress } from "@/lib/interview/storage";
 import type { InterviewScores, FeedbackItem } from "@/lib/interview/types";
 
 // ===== Radar Chart (SVG) =====
@@ -198,17 +199,24 @@ function InterviewResultContent() {
     [personaId]
   );
 
-  // Simulated scores (in production, these come from the session)
-  const scores: InterviewScores = useMemo(
-    () => ({
-      logic: Math.floor(Math.random() * 25) + 60,
-      passion: Math.floor(Math.random() * 25) + 60,
-      originality: Math.floor(Math.random() * 25) + 55,
-      conciseness: Math.floor(Math.random() * 25) + 58,
-      impression: Math.floor(Math.random() * 25) + 62,
-    }),
-    []
-  );
+  // Load real scores from sessionStorage (set by session page), fallback to random
+  const scores: InterviewScores = useMemo(() => {
+    if (typeof window === "undefined") {
+      return { logic: 65, passion: 65, originality: 60, conciseness: 62, impression: 64 };
+    }
+    try {
+      const raw = sessionStorage.getItem("interview-scores");
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        // Clear after reading so refreshing the page doesn't reuse
+        sessionStorage.removeItem("interview-scores");
+        return parsed as InterviewScores;
+      }
+    } catch {}
+    // Fallback for direct access
+    const r = () => Math.floor(Math.random() * 25) + 58;
+    return { logic: r(), passion: r(), originality: r(), conciseness: r(), impression: r() };
+  }, []);
 
   const totalScore = useMemo(
     () =>
@@ -219,6 +227,13 @@ function InterviewResultContent() {
   );
 
   const exp = useMemo(() => totalScore * 2, [totalScore]);
+
+  // Save EXP to localStorage for cumulative progression
+  const [cumulativeExp, setCumulativeExp] = useState(exp);
+  useEffect(() => {
+    const progress = saveProgress(exp);
+    setCumulativeExp(progress.totalExp);
+  }, [exp]);
 
   // Generate persona-specific feedback
   const feedback: FeedbackItem[] = useMemo(() => {
@@ -327,7 +342,7 @@ function InterviewResultContent() {
 
         {/* Rank Progress */}
         <div className="animate-fade-up [animation-delay:200ms] mt-6">
-          <RankProgressBar exp={exp} />
+          <RankProgressBar exp={cumulativeExp} />
         </div>
 
         {/* Radar + Score Breakdown */}
