@@ -16,13 +16,18 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Merge feature branch to main
+      - name: Force update main with feature branch content
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git checkout main
-          git merge origin/claude/celebrity-interview-avatar-9IF4q --no-edit -m "Merge interview-avatar feature for deployment" || echo "Already up to date"
-          git push origin main || echo "Nothing to push"
+          git merge origin/claude/celebrity-interview-avatar-9IF4q -X theirs --no-edit -m "Deploy interview-avatar feature" || {
+            echo "Merge conflict - resolving with feature branch content"
+            git checkout --theirs .
+            git add -A
+            git commit --no-edit -m "Deploy interview-avatar feature (resolved conflicts)"
+          }
+          git push origin main
       - name: Trigger deploy workflow
         run: |
           curl -s -X POST \
