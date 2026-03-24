@@ -1,0 +1,27 @@
+name: Merge to Main and Deploy
+
+on:
+  push:
+    branches: ["claude/job-search-app-spec-VVbmm"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  merge-to-main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Merge feature branch to main
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout main
+          git merge origin/claude/job-search-app-spec-VVbmm --no-edit -m "Merge claude/job-search-app-spec-VVbmm for deployment"
+          git push origin main
