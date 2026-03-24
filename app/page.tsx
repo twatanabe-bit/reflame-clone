@@ -64,21 +64,45 @@ function Hero() {
           手入力ゼロで就活の全情報を一元管理。
         </p>
 
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-          <Link
-            href="/dashboard"
-            className="rounded-xl bg-blue-600 hover:bg-blue-700 px-6 py-3 text-sm font-semibold text-white transition-colors flex items-center gap-2 shadow-sm"
-          >
-            デモを体験する
-            <ArrowRight className="h-4 w-4" />
-          </Link>
-          <Link
-            href="/features"
-            className="rounded-xl border border-slate-300 hover:border-slate-400 bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition-colors flex items-center gap-1"
-          >
-            機能を見る
-            <ChevronRight className="h-4 w-4" />
-          </Link>
+        {/* Stats */}
+        <div className="animate-fade-up [animation-delay:360ms] mb-12 grid max-w-[520px] grid-cols-3 gap-3">
+          {[
+            { num: "10万+", lbl: "診断実績" },
+            { num: "6項目", lbl: "評価軸" },
+            { num: "業界別", lbl: "マトリックス算出" },
+          ].map((s) => (
+            <div
+              key={s.lbl}
+              className="rounded-2xl border border-white/10 bg-white/[0.07] px-3 py-[18px] text-center"
+            >
+              <div className="text-2xl font-bold text-blue-400">{s.num}</div>
+              <div className="mt-1 text-[11px] text-slate-500">{s.lbl}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* CTA */}
+        <div className="animate-fade-up [animation-delay:520ms] flex flex-col gap-4 sm:flex-row sm:items-center">
+          <div>
+            <Link
+              href="/diagnosis"
+              className="inline-flex items-center gap-[10px] rounded-full bg-gradient-to-br from-blue-600 to-blue-800 px-12 py-5 text-[17px] font-bold text-white shadow-lg transition-all hover:-translate-y-[3px] hover:shadow-[0_16px_48px_rgba(30,64,175,0.45)]"
+            >
+              無料で診断する
+              <ArrowRight className="h-5 w-5" />
+            </Link>
+            <p className="mt-[10px] text-xs text-slate-500">※ 無料・登録不要 ─ 所要時間2分</p>
+          </div>
+          <div>
+            <Link
+              href="/interview"
+              className="inline-flex items-center gap-[10px] rounded-full bg-gradient-to-br from-purple-600 to-blue-600 px-10 py-5 text-[17px] font-bold text-white shadow-lg transition-all hover:-translate-y-[3px] hover:shadow-[0_16px_48px_rgba(124,58,237,0.45)]"
+            >
+              🎭 AI面接官と練習
+              <ArrowRight className="h-5 w-5" />
+            </Link>
+            <p className="mt-[10px] text-xs text-slate-500">※ 芸能人風アバターが面接官に</p>
+          </div>
         </div>
 
         <p className="mt-4 text-xs text-slate-400">無料 ・ 登録不要でデモ体験可能</p>

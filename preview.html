@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>面接トレーニング AI | プレビュー</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Noto Sans JP',sans-serif;background:#F7F8FA;color:#1A1A2E;-webkit-font-smoothing:antialiased;}
+.preview-nav{position:fixed;top:0;left:0;right:0;z-index:9999;background:rgba(255,255,255,0.95);backdrop-filter:blur(12px);border-bottom:1px solid #E5E7EB;padding:12px 24px;display:flex;gap:8px;align-items:center;}
+.preview-nav .label{color:#9CA3AF;font-size:11px;margin-right:8px;}
+.preview-nav button{padding:8px 20px;border-radius:9999px;border:1px solid #E5E7EB;background:#fff;color:#6B7280;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:'Noto Sans JP',sans-serif;}
+.preview-nav button:hover{background:#E8F4FD;color:#0066CC;border-color:#0066CC;}
+.preview-nav button.active{background:#0066CC;border-color:#0066CC;color:#fff;}
+.page-section{display:none;padding-top:60px;}
+.page-section.active{display:block;}
+@keyframes fade-up{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+.animate-fade-up{animation:fade-up 0.6s cubic-bezier(0.22,1,0.36,1) both;}
+@keyframes typing{0%,100%{opacity:0.3;transform:scale(0.8);}50%{opacity:1;transform:scale(1);}}
+</style>
+</head>
+<body>
+<!-- Navigation -->
+<div class="preview-nav">
+  <span class="label">PREVIEW</span>
+  <button class="active" onclick="showPage('avatar')">アバター選択</button>
+  <button onclick="showPage('interview')">面接画面</button>
+  <button onclick="showPage('result')">結果レポート</button>
+</div>
+
+<!-- PAGE 1: Avatar Select -->
+<div id="page-avatar" class="page-section active">
+<div style="min-height:100vh;background:linear-gradient(180deg,#E8F4FD 0%,#F7F8FA 40%);padding:0 24px 80px;">
+  <div style="max-width:880px;margin:0 auto;">
+    <!-- Header -->
+    <div style="padding-top:80px;text-align:center;" class="animate-fade-up">
+      <div style="display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid #E5E7EB;border-radius:9999px;padding:6px 16px;font-size:12px;color:#0066CC;font-weight:600;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+        <span>🎯</span> AI面接トレーニング
+      </div>
+      <h1 style="font-size:32px;font-weight:900;color:#1A1A2E;line-height:1.4;">面接官アバターを<br/>選んでトレーニング開始</h1>
+      <p style="margin-top:12px;font-size:15px;color:#6B7280;max-width:500px;margin-left:auto;margin-right:auto;line-height:1.7;">個性豊かなAI面接官との模擬面接で、<br/>あなたの面接力を効率的に鍛えましょう。</p>
+    </div>
+
+    <!-- Avatar Grid -->
+    <div style="margin-top:40px;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px;" class="animate-fade-up">
+      <!-- Avatar 1 -->
+      <div style="background:#fff;border-radius:16px;border:2px solid #E5E7EB;padding:24px;cursor:pointer;transition:all 0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.05);" onmouseover="this.style.borderColor='#0066CC';this.style.boxShadow='0 4px 12px rgba(0,102,204,0.15)'" onmouseout="this.style.borderColor='#E5E7EB';this.style.boxShadow='0 1px 3px rgba(0,0,0,0.05)'">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,#FF6B35,#FF8F65);display:flex;align-items:center;justify-content:center;font-size:28px;">🔥</div>
+          <div>
+            <h3 style="font-size:16px;font-weight:700;color:#1A1A2E;">熱血リーダー ケイスケ</h3>
+            <span style="display:inline-block;margin-top:4px;padding:2px 10px;border-radius:9999px;background:#FFF3ED;color:#FF6B35;font-size:11px;font-weight:600;">カリスマ・直感型</span>
+          </div>
+        </div>
+        <p style="margin-top:14px;font-size:13px;color:#6B7280;line-height:1.7;">チームを鼓舞する熱いリーダータイプ。あなたの情熱と行動力を引き出す質問を投げかけます。</p>
+        <div style="margin-top:14px;display:flex;gap:6px;">
+          <span style="padding:3px 10px;border-radius:8px;background:#F7F8FA;font-size:11px;color:#6B7280;">🎯 リーダーシップ重視</span>
+          <span style="padding:3px 10px;border-radius:8px;background:#F7F8FA;font-size:11px;color:#6B7280;">⭐ 難易度4</span>
+        </div>
+      </div>
+      <!-- Avatar 2 -->
+      <div style="background:#fff;border-radius:16px;border:2px solid #E5E7EB;padding:24px;cursor:pointer;transition:all 0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.05);" onmouseover="this.style.borderColor='#0066CC';this.style.boxShadow='0 4px 12px rgba(0,102,204,0.15)'" onmouseout="this.style.borderColor='#E5E7EB';this.style.boxShadow='0 1px 3px rgba(0,0,0,0.05)'">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,#0066CC,#3B82F6);display:flex;align-items:center;justify-content:center;font-size:28px;">🧊</div>
+          <div>
+            <h3 style="font-size:16px;font-weight:700;color:#1A1A2E;">知的クール ミサキ</h3>
+            <span style="display:inline-block;margin-top:4px;padding:2px 10px;border-radius:9999px;background:#E8F4FD;color:#0066CC;font-size:11px;font-weight:600;">分析・論理型</span>
+          </div>
+        </div>
+        <p style="margin-top:14px;font-size:13px;color:#6B7280;line-height:1.7;">冷静沈着な分析タイプ。論理的思考力と問題解決能力を深掘りする質問が得意。</p>
+        <div style="margin-top:14px;display:flex;gap:6px;">
+          <span style="padding:3px 10px;border-radius:8px;background:#F7F8FA;font-size:11px;color:#6B7280;">🧠 論理力重視</span>
+          <span style="padding:3px 10px;border-radius:8px;background:#F7F8FA;font-size:11px;color:#6B7280;">⭐ 難易度5</span>
+        </div>
+      </div>
+      <!-- Avatar 3 -->
+      <div style="background:#fff;border-radius:16px;border:2px solid #E5E7EB;padding:24px;cursor:pointer;transition:all 0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.05);" onmouseover="this.style.borderColor='#0066CC';this.style.boxShadow='0 4px 12px rgba(0,102,204,0.15)'" onmouseout="this.style.borderColor='#E5E7EB';this.style.boxShadow='0 1px 3px rgba(0,0,0,0.05)'">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,#10B981,#34D399);display:flex;align-items:center;justify-content:center;font-size:28px;">🌸</div>
+          <div>
+            <h3 style="font-size:16px;font-weight:700;color:#1A1A2E;">優しい先輩 ユウナ</h3>
+            <span style="display:inline-block;margin-top:4px;padding:2px 10px;border-radius:9999px;background:#ECFDF5;color:#10B981;font-size:11px;font-weight:600;">共感・サポート型</span>
+          </div>
+        </div>
+        <p style="margin-top:14px;font-size:13px;color:#6B7280;line-height:1.7;">親しみやすいメンター。自己PRやガクチカの魅力を丁寧に引き出してくれます。</p>
+        <div style="margin-top:14px;display:flex;gap:6px;">
+          <span style="padding:3px 10px;border-radius:8px;background:#F7F8FA;font-size:11px;color:#6B7280;">💬 コミュ力重視</span>
+          <span style="padding:3px 10px;border-radius:8px;background:#F7F8FA;font-size:11px;color:#6B7280;">⭐ 難易度3</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA Button -->
+    <div style="margin-top:40px;text-align:center;" class="animate-fade-up">
+      <button style="padding:16px 48px;border-radius:14px;border:none;background:#FF6B35;color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif;box-shadow:0 4px 14px rgba(255,107,53,0.3);transition:all 0.2s;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(255,107,53,0.4)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 14px rgba(255,107,53,0.3)'">
+        面接を始める →
+      </button>
+      <p style="margin-top:12px;font-size:12px;color:#9CA3AF;">所要時間：約10〜15分 ｜ 何度でもトレーニング可能</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- PAGE 2: Interview Chat -->
+<div id="page-interview" class="page-section">
+<div style="min-height:100vh;display:flex;flex-direction:column;background:#F7F8FA;">
+  <!-- Interview Header -->
+  <div style="background:#fff;border-bottom:1px solid #E5E7EB;padding:16px 24px;">
+    <div style="max-width:700px;margin:0 auto;display:flex;align-items:center;gap:14px;">
+      <div style="width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,#FF6B35,#FF8F65);display:flex;align-items:center;justify-content:center;font-size:24px;">🔥</div>
+      <div style="flex:1;">
+        <h2 style="font-size:16px;font-weight:700;color:#1A1A2E;">熱血リーダー ケイスケ</h2>
+        <div style="display:flex;align-items:center;gap:8px;margin-top:3px;">
+          <span style="width:8px;height:8px;border-radius:50%;background:#10B981;display:inline-block;"></span>
+          <span style="font-size:12px;color:#6B7280;">面接中 ─ ガクチカ</span>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;background:#F7F8FA;border-radius:10px;padding:6px 14px;">
+        <span style="font-size:12px;color:#6B7280;">Q</span>
+        <span style="font-size:18px;font-weight:900;color:#0066CC;">3</span>
+        <span style="font-size:12px;color:#9CA3AF;">/ 5</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chat Messages -->
+  <div style="flex:1;overflow-y:auto;padding:24px;">
+    <div style="max-width:700px;margin:0 auto;display:flex;flex-direction:column;gap:16px;">
+      <!-- AI Message -->
+      <div style="display:flex;gap:10px;align-items:flex-start;">
+        <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#FF6B35,#FF8F65);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">🔥</div>
+        <div style="background:#fff;border:1px solid #E5E7EB;border-radius:4px 16px 16px 16px;padding:14px 18px;max-width:80%;box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+          <p style="font-size:14px;line-height:1.8;color:#1A1A2E;">よし、次の質問いくぞ。<br/><br/>お前が学生時代に一番<strong style="color:#FF6B35;">本気で取り組んだこと</strong>って何だ？<br/>結果だけじゃなくて、そこに至るまでの<strong style="color:#FF6B35;">プロセス</strong>を聞かせてくれ。</p>
+        </div>
+      </div>
+      <!-- User Message -->
+      <div style="display:flex;gap:10px;align-items:flex-start;flex-direction:row-reverse;">
+        <div style="width:36px;height:36px;border-radius:10px;background:#0066CC;display:flex;align-items:center;justify-content:center;font-size:14px;color:#fff;font-weight:700;flex-shrink:0;">You</div>
+        <div style="background:#0066CC;border-radius:16px 4px 16px 16px;padding:14px 18px;max-width:80%;">
+          <p style="font-size:14px;line-height:1.8;color:#fff;">大学2年生の時にサークルの新入生歓迎イベントの企画リーダーを務めました。前年は参加者が50人程度だったのですが、SNSを活用した告知戦略を立て...</p>
+        </div>
+      </div>
+      <!-- AI Follow-up -->
+      <div style="display:flex;gap:10px;align-items:flex-start;">
+        <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#FF6B35,#FF8F65);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">🔥</div>
+        <div style="background:#fff;border:1px solid #E5E7EB;border-radius:4px 16px 16px 16px;padding:14px 18px;max-width:80%;box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+          <p style="font-size:14px;line-height:1.8;color:#1A1A2E;">お、SNS活用か。いいじゃないか。<br/>で、具体的にどんな<strong style="color:#FF6B35;">壁にぶつかって</strong>、それをどう乗り越えた？<br/>そこが面接官が一番聞きたいところだぞ。</p>
+        </div>
+      </div>
+      <!-- Typing Indicator -->
+      <div style="display:flex;gap:10px;align-items:flex-start;">
+        <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#FF6B35,#FF8F65);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">🔥</div>
+        <div style="background:#fff;border:1px solid #E5E7EB;border-radius:16px;padding:14px 22px;display:flex;gap:6px;">
+          <span style="width:8px;height:8px;border-radius:50%;background:#9CA3AF;animation:typing 1.4s infinite;"></span>
+          <span style="width:8px;height:8px;border-radius:50%;background:#9CA3AF;animation:typing 1.4s infinite 0.2s;"></span>
+          <span style="width:8px;height:8px;border-radius:50%;background:#9CA3AF;animation:typing 1.4s infinite 0.4s;"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Input Area -->
+  <div style="background:#fff;border-top:1px solid #E5E7EB;padding:14px 24px;">
+    <div style="max-width:700px;margin:0 auto;display:flex;align-items:flex-end;gap:10px;">
+      <div style="width:40px;height:40px;border-radius:12px;background:#F7F8FA;display:flex;align-items:center;justify-content:center;color:#9CA3AF;">🎤</div>
+      <div style="flex:1;border-radius:12px;border:1px solid #E5E7EB;background:#F7F8FA;padding:12px 16px;font-size:14px;color:#9CA3AF;">回答を入力してください...</div>
+      <div style="width:40px;height:40px;border-radius:12px;background:#0066CC;display:flex;align-items:center;justify-content:center;color:#fff;cursor:pointer;">➤</div>
+    </div>
+    <p style="margin-top:8px;text-align:center;font-size:10px;color:#9CA3AF;">現在のフェーズ：ガクチカ ─ Shift+Enter で改行</p>
+  </div>
+</div>
+</div>
+
+<!-- PAGE 3: Result Report -->
+<div id="page-result" class="page-section">
+<div style="min-height:100vh;background:#F7F8FA;padding:0 24px 80px;">
+  <div style="max-width:880px;margin:0 auto;">
+    <!-- Header -->
+    <div style="padding-top:80px;display:flex;align-items:center;gap:16px;">
+      <div style="width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,#0066CC,#3B82F6);display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 4px 12px rgba(0,102,204,0.2);">📊</div>
+      <div>
+        <h1 style="font-size:24px;font-weight:900;color:#1A1A2E;">面接結果レポート</h1>
+        <p style="font-size:14px;color:#6B7280;margin-top:4px;">面接官：熱血リーダー ケイスケ（カリスマ・直感型）</p>
+      </div>
+    </div>
+
+    <!-- KPI Cards -->
+    <div style="margin-top:32px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;">
+      <div style="background:#fff;border-radius:16px;border:1px solid #E5E7EB;border-top:4px solid #0066CC;padding:24px;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+        <div style="display:flex;align-items:center;justify-content:center;gap:6px;"><span>🏆</span><span style="font-size:12px;color:#6B7280;">総合スコア</span></div>
+        <div style="margin-top:10px;font-size:42px;font-weight:900;color:#0066CC;">74</div>
+        <div style="margin-top:4px;font-size:16px;font-weight:700;color:#FF6B35;">ランク A</div>
+      </div>
+      <div style="background:#fff;border-radius:16px;border:1px solid #E5E7EB;border-top:4px solid #10B981;padding:24px;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+        <div style="display:flex;align-items:center;justify-content:center;gap:6px;"><span>📈</span><span style="font-size:12px;color:#6B7280;">成長ポイント</span></div>
+        <div style="margin-top:10px;font-size:42px;font-weight:900;color:#10B981;">+148</div>
+        <div style="margin-top:4px;font-size:12px;color:#6B7280;">レベルアップに貢献</div>
+      </div>
+      <div style="background:#fff;border-radius:16px;border:1px solid #E5E7EB;border-top:4px solid #F59E0B;padding:24px;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+        <div style="display:flex;align-items:center;justify-content:center;gap:6px;"><span>⭐</span><span style="font-size:12px;color:#6B7280;">難易度</span></div>
+        <div style="margin-top:10px;font-size:24px;">⭐⭐⭐⭐☆</div>
+        <div style="margin-top:4px;font-size:12px;color:#6B7280;">カリスマ・直感型</div>
+      </div>
+    </div>
+
+    <!-- Level Progress -->
+    <div style="margin-top:24px;background:#fff;border-radius:16px;border:1px solid #E5E7EB;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="font-size:24px;">👔</span>
+          <div><p style="font-size:14px;font-weight:700;color:#1A1A2E;">新入社員</p><p style="font-size:11px;color:#6B7280;margin-top:2px;">Lv.2</p></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;color:#6B7280;">
+          <span>→</span>
+          <div style="text-align:right;"><p style="font-size:12px;color:#0066CC;font-weight:600;">⭐ 若手のホープ</p><p style="font-size:10px;color:#9CA3AF;margin-top:2px;">あと152ポイント</p></div>
+        </div>
+      </div>
+      <div style="height:10px;border-radius:9999px;background:#E5E7EB;overflow:hidden;">
+        <div style="height:100%;width:49%;border-radius:9999px;background:linear-gradient(to right,#0066CC,#3B82F6);"></div>
+      </div>
+      <p style="margin-top:8px;text-align:right;font-size:11px;color:#9CA3AF;">148 / 300 ポイント</p>
+    </div>
+
+    <!-- Radar + Scores -->
+    <div style="margin-top:24px;display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+      <!-- Radar Chart -->
+      <div style="display:flex;align-items:center;justify-content:center;background:#fff;border-radius:16px;border:1px solid #E5E7EB;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+        <svg viewBox="0 0 240 240" style="width:100%;max-width:280px;">
+          <polygon points="120,30 205,85 173,195 67,195 35,85" fill="none" stroke="#E5E7EB" stroke-width="1"/>
+          <polygon points="120,48 191,93 165,183 75,183 49,93" fill="none" stroke="#E5E7EB" stroke-width="1"/>
+          <polygon points="120,66 177,101 157,171 83,171 63,101" fill="none" stroke="#E5E7EB" stroke-width="1"/>
+          <polygon points="120,84 163,109 149,159 91,159 77,109" fill="none" stroke="#E5E7EB" stroke-width="1"/>
+          <polygon points="120,102 149,117 141,147 99,147 91,117" fill="none" stroke="#E5E7EB" stroke-width="1"/>
+          <polygon points="120,42 196,88 167,186 73,186 44,88" fill="rgba(0,102,204,0.12)" stroke="#0066CC" stroke-width="2"/>
+          <circle cx="120" cy="42" r="4" fill="#0066CC"/>
+          <circle cx="196" cy="88" r="4" fill="#0066CC"/>
+          <circle cx="167" cy="186" r="4" fill="#0066CC"/>
+          <circle cx="73" cy="186" r="4" fill="#0066CC"/>
+          <circle cx="44" cy="88" r="4" fill="#0066CC"/>
+          <text x="120" y="18" text-anchor="middle" fill="#6B7280" font-size="11">論理性</text>
+          <text x="218" y="85" text-anchor="middle" fill="#6B7280" font-size="11">熱量</text>
+          <text x="180" y="208" text-anchor="middle" fill="#6B7280" font-size="11">独自性</text>
+          <text x="60" y="208" text-anchor="middle" fill="#6B7280" font-size="11">簡潔さ</text>
+          <text x="25" y="85" text-anchor="middle" fill="#6B7280" font-size="11">印象</text>
+        </svg>
+      </div>
+
+      <!-- Score Bars -->
+      <div style="background:#fff;border-radius:16px;border:1px solid #E5E7EB;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+        <h3 style="font-size:15px;font-weight:700;color:#1A1A2E;display:flex;align-items:center;gap:8px;margin-bottom:20px;"><span>📈</span> スコア内訳</h3>
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <div style="display:flex;align-items:center;gap:12px;"><span style="min-width:56px;font-size:13px;color:#6B7280;">論理性</span><div style="flex:1;height:8px;border-radius:9999px;background:#E5E7EB;overflow:hidden;"><div style="height:100%;width:78%;border-radius:9999px;background:#0066CC;"></div></div><span style="min-width:28px;text-align:right;font-size:13px;font-weight:700;color:#0066CC;">78</span></div>
+          <div style="display:flex;align-items:center;gap:12px;"><span style="min-width:56px;font-size:13px;color:#6B7280;">熱量</span><div style="flex:1;height:8px;border-radius:9999px;background:#E5E7EB;overflow:hidden;"><div style="height:100%;width:82%;border-radius:9999px;background:#FF6B35;"></div></div><span style="min-width:28px;text-align:right;font-size:13px;font-weight:700;color:#FF6B35;">82</span></div>
+          <div style="display:flex;align-items:center;gap:12px;"><span style="min-width:56px;font-size:13px;color:#6B7280;">独自性</span><div style="flex:1;height:8px;border-radius:9999px;background:#E5E7EB;overflow:hidden;"><div style="height:100%;width:68%;border-radius:9999px;background:#3B82F6;"></div></div><span style="min-width:28px;text-align:right;font-size:13px;font-weight:700;color:#3B82F6;">68</span></div>
+          <div style="display:flex;align-items:center;gap:12px;"><span style="min-width:56px;font-size:13px;color:#6B7280;">簡潔さ</span><div style="flex:1;height:8px;border-radius:9999px;background:#E5E7EB;overflow:hidden;"><div style="height:100%;width:71%;border-radius:9999px;background:#10B981;"></div></div><span style="min-width:28px;text-align:right;font-size:13px;font-weight:700;color:#10B981;">71</span></div>
+          <div style="display:flex;align-items:center;gap:12px;"><span style="min-width:56px;font-size:13px;color:#6B7280;">印象</span><div style="flex:1;height:8px;border-radius:9999px;background:#E5E7EB;overflow:hidden;"><div style="height:100%;width:73%;border-radius:9999px;background:#F59E0B;"></div></div><span style="min-width:28px;text-align:right;font-size:13px;font-weight:700;color:#F59E0B;">73</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feedback -->
+    <h3 style="margin:28px 0 16px;font-size:18px;font-weight:700;color:#1A1A2E;display:flex;align-items:center;gap:8px;"><span>💬</span>「熱血リーダー ケイスケ」からのフィードバック</h3>
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div style="background:#fff;border-radius:16px;border:1px solid #E5E7EB;border-left:4px solid #0066CC;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+          <span style="font-size:15px;font-weight:700;color:#1A1A2E;">論理性</span>
+          <span style="border-radius:9999px;background:#E8F4FD;padding:4px 14px;font-size:13px;font-weight:700;color:#0066CC;">78点</span>
+        </div>
+        <p style="font-size:14px;line-height:1.8;color:#4B5563;">ケイスケ「まぁ、話の筋は通ってるやろ。でもね、結論→理由→具体例の順番をもっと意識すると、面接官の心に刺さるよ。」</p>
+        <div style="margin-top:14px;border-radius:12px;background:#F0FDF4;padding:14px;border:1px solid #D1FAE5;">
+          <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#10B981;">改善アクション</p>
+          <p style="margin-top:4px;font-size:13px;color:#6B7280;">PREP法（Point-Reason-Example-Point）を意識して回答を構成する</p>
+        </div>
+      </div>
+      <div style="background:#fff;border-radius:16px;border:1px solid #E5E7EB;border-left:4px solid #FF6B35;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+          <span style="font-size:15px;font-weight:700;color:#1A1A2E;">熱量・パッション</span>
+          <span style="border-radius:9999px;background:#FFF3ED;padding:4px 14px;font-size:13px;font-weight:700;color:#FF6B35;">82点</span>
+        </div>
+        <p style="font-size:14px;line-height:1.8;color:#4B5563;">ケイスケ「で、お前は本気なの？ 言葉に気持ちを込めろ。棒読みじゃ伝わらないよ。」</p>
+        <div style="margin-top:14px;border-radius:12px;background:#F0FDF4;padding:14px;border:1px solid #D1FAE5;">
+          <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#10B981;">改善アクション</p>
+          <p style="margin-top:4px;font-size:13px;color:#6B7280;">自分が本当に情熱を持てるエピソードを中心に据える</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Encouragement -->
+    <div style="margin-top:28px;border-radius:16px;background:linear-gradient(135deg,#E8F4FD,#EDE9FE);border:1px solid #D6BCFA;padding:28px;text-align:center;">
+      <div style="font-size:32px;">💪</div>
+      <p style="margin-top:12px;font-size:16px;font-weight:700;line-height:1.8;color:#1A1A2E;">「お前ならいける。覚悟を決めた人間は強い。<br/>面接官にその魂をぶつけてこい。」</p>
+      <p style="margin-top:8px;font-size:13px;color:#6B7280;">─ 熱血リーダー ケイスケ</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+function showPage(id) {
+  document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.preview-nav button').forEach(el => el.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  event.target.classList.add('active');
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>
