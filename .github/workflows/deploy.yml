@@ -2,7 +2,8 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: ["claude/career-quest-2027-KCp3Q"]
+    branches: ["claude/career-quest-2027-KCp3Q", "main"]
+  workflow_dispatch:
 
 permissions:
   contents: read
