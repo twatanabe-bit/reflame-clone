@@ -7,15 +7,18 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 jobs:
-  merge-and-trigger:
+  merge-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Force update main with feature branch content
         run: |
           git config user.name "github-actions[bot]"
@@ -28,11 +31,32 @@ jobs:
             git commit --no-edit -m "Deploy interview-avatar feature (resolved conflicts)"
           }
           git push origin main
-      - name: Trigger deploy workflow
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npx next build
+
+      - name: Add .nojekyll
+        run: touch out/.nojekyll
+
+      - name: Deploy to gh-pages
         run: |
-          curl -s -X POST \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github+json" \
-            "https://api.github.com/repos/${{ github.repository }}/dispatches" \
-            -d '{"event_type":"deploy-pages"}'
-          echo "Deploy triggered"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout gh-pages || git checkout --orphan gh-pages
+          # Remove all tracked files
+          git rm -rf . --quiet 2>/dev/null || true
+          find . -maxdepth 1 ! -name '.git' ! -name '.' ! -name 'out' -exec rm -rf {} +
+          # Copy build output
+          cp -r out/* out/.nojekyll .
+          rm -rf out
+          git add -A
+          git commit -m "deploy: $(git rev-parse --short HEAD)" || echo "No changes to deploy"
+          git push origin gh-pages --force
