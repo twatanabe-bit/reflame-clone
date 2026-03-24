@@ -1,16 +1,9 @@
 import type { Metadata } from "next";
-import { Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
 
-const notoSansJP = Noto_Sans_JP({
-  variable: "--font-noto-sans-jp",
-  subsets: ["latin"],
-  weight: ["400", "500", "700", "900"],
-});
-
 export const metadata: Metadata = {
-  title: "市場価値診断 2025 | Market Value Diagnostic",
-  description: "業界別マトリックスに基づく構造化スコアリングで、あなたのリアルな市場価値を診断します。",
+  title: "キャリアクエスト | MBTI×RPG 就活キャリア診断",
+  description: "12問の質問に答えるだけで、MBTIに基づく16タイプの職業適性をRPG風に診断。あなたのステータス・得意武器・伝説の相棒まで丸わかり。",
 };
 
 export default function RootLayout({
@@ -19,8 +12,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja" className={`${notoSansJP.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col font-[family-name:var(--font-noto-sans-jp)]">
+    <html lang="ja" className="h-full antialiased">
+      <body className="min-h-full flex flex-col font-sans">
         {children}
       </body>
     </html>
