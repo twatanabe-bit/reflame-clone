@@ -1,4 +1,4 @@
-name: Merge to Main and Deploy
+name: Build and Deploy to GitHub Pages
 
 on:
   push:
@@ -10,32 +10,24 @@ permissions:
   pages: write
   id-token: write
 
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
-  merge-and-deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Force update main with feature branch content
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git checkout main
-          git merge origin/claude/celebrity-interview-avatar-9IF4q -X theirs --no-edit -m "Deploy interview-avatar feature" || {
-            echo "Merge conflict - resolving with feature branch content"
-            git checkout --theirs .
-            git add -A
-            git commit --no-edit -m "Deploy interview-avatar feature (resolved conflicts)"
-          }
-          git push origin main
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: npm
 
       - name: Install dependencies
         run: npm ci
@@ -46,17 +38,14 @@ jobs:
       - name: Add .nojekyll
         run: touch out/.nojekyll
 
-      - name: Deploy to gh-pages
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git checkout gh-pages || git checkout --orphan gh-pages
-          # Remove all tracked files
-          git rm -rf . --quiet 2>/dev/null || true
-          find . -maxdepth 1 ! -name '.git' ! -name '.' ! -name 'out' -exec rm -rf {} +
-          # Copy build output
-          cp -r out/* out/.nojekyll .
-          rm -rf out
-          git add -A
-          git commit -m "deploy: $(git rev-parse --short HEAD)" || echo "No changes to deploy"
-          git push origin gh-pages --force
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
